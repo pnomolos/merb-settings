@@ -1,0 +1,7 @@
+TODO:
+
+- Fix MerbSettings.description and MerbSettings.version
+- Fix LICENSE with your name
+- Fix Rakefile with your name and contact info
+- Add your code to lib/merb-settings.rb
+- Add your Merb rake tasks to lib/merb-settings/merbtasks.rb

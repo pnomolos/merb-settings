@@ -3,73 +3,53 @@ MerbSettings
 
 Enable settings for your app or models
 
-------------------------------------------------------------------------------
-
-1. Rake tasks to package/install the gem - edit this to modify the manifest.
-2. The slice application in a single file: controllers, models, helper methods.
-3. Standard rake tasks available to your application.
-4. Your custom application rake tasks.
-5. The main slice file - contains all slice setup logic/config.
-
-
-To see all available tasks for MerbSettings run:
-
-rake -T slices:merb_settings
-
-------------------------------------------------------------------------------
-
-Instructions for installation:
-
-file: config/init.rb
-
-# add the slice as a regular dependency
+Add the slice as a regular dependency
 
 dependency 'merb-settings'
 
-# if needed, configure which slices to load and in which order
-
-Merb::Plugins.config[:merb_slices] = { :queue => ["MerbSettings", ...] }
-
-# optionally configure the plugins in a before_app_loads callback
-
-Merb::BootLoader.before_app_loads do
-  
-  Merb::Slices::config[:merb_settings][:option] = value
-  
-end
-
-file: config/router.rb
-
-# example: /merb-settings/:controller/:action/:id
-
-r.add_slice(:MerbSettings)
-
-# example: /foo/:controller/:action/:id
-
-r.add_slice(:MerbSettings, 'foo') # same as :path => 'foo'
-
-# example: /:lang/:controller/:action/:id (with :a param set)
-
-r.add_slice(:MerbSettings, :path => ':lang', :params => { :a => 'b' })
-
-# example: /:controller/:action/:id
-
-r.slice(:MerbSettings)
-
-Normally you should also run the following rake task:
-
-rake slices:merb_settings:install
-
-------------------------------------------------------------------------------
+Create a model that will hold all settings. Include the following as a
+basis. No other includes are necessary.
 
 class Setting
   include MerbSettings::Adapter::DataMapper
   include MerbSettings::Adapter::DataMapper::DefaultModelSetup
 end
 
+This then enables you to do the following:
+
+Setting.foo = "test"
+Setting.bar = 9
+Setting.foo #=> "test"
+Setting.foo = 9
+Setting.foo #=> 9
+
+To have settings that are scoped to a model include the following alongside
+all your other model code:
+
 class User
   include MerbSettings::ScopedMethods
+
+  property :foo, ....
 
   setting :foo, 'text'
   setting :bar, 12
 end
+
+Notice that you can also set defaults for some settings so that if they are
+called upon before they are set then you will get the default (this actually
+is not working yet :-) )
+
+Other options:
+
+You can set up global defaults in the before_app_loads callback
+
+Merb::BootLoader.before_app_loads do
+  
+  Merb::Slices::config[:merb_settings][:foo] = 'test'
+  Merb::Slices::config[:merb_settings][:bar] = 9
+  
+end
+
+------------------------------------------------------------------------------
+
+

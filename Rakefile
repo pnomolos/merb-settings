@@ -22,9 +22,12 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  s.add_dependency('merb-slices', '>= 0.9.5')
+  s.add_dependency('merb-slices', '>= 0.9.4')
+  s.add_dependency('dm-timestamps', '>= 0.9.4')
+  s.add_dependency('dm-validations', '>= 0.9.4')
+  s.add_dependency('yaml')
   s.require_path = 'lib'
-  s.files = %w(LICENSE README Rakefile TODO application.rb) + Dir.glob("{lib,public,stubs}/**/*")
+  s.files = %w(LICENSE README Rakefile TODO) + Dir.glob("{lib,public,stubs}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

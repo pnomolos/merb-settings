@@ -6,25 +6,20 @@ module MerbSettings
     end
 
     module InstanceMethods
-      def get_setting(var)
-        type = self.type
+      def setting(var, val=nil)
+        type = self.class
         key = self.to_param
-
-        MS[:setting].getter(var,type,key)
-      end
-
-      def set_setting(var, val)
-        type = self.type
-        key = self.to_param
-
-        MS[:setting].setter(var,val,type,key)
+        if val
+          MS[:setting].setter(var,val, {:type => type, :key => key})
+        else
+          MS[:setting].getter({:name => var,:type => type, :key => key})
+        end
       end
 
       def settings
-        type = self.type
+        type = self.class
         key = self.to_param
-
-        MS[:setting].get_all(type,key)
+        MS[:setting].getter({:type => type, :key => key})
       end
     end
 

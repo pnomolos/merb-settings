@@ -1,7 +1,10 @@
 TODO:
 
-- Fix MerbSettings.description and MerbSettings.version
-- Fix LICENSE with your name
-- Fix Rakefile with your name and contact info
-- Add your code to lib/merb-settings.rb
-- Add your Merb rake tasks to lib/merb-settings/merbtasks.rb
+- Add 'method_missing' settings to the scoped methods, maybe
+  so ..
+  u = User.first
+  u.foo = 'test'
+  u.foo #=> 'test
+  
+- Add tests
+- Add some more tests

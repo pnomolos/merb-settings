@@ -21,14 +21,14 @@ module MerbSettings
             val = args.first
             setter(var, val)
           else
-            getter(method_name)
+            getter({:name => method_name})
           end
         end
 
         #destroy the specified settings record
         def destroy(var)
           var_name = var.to_s
-          obj = getter(var_name)
+          obj = getter({:name => var_name})
           val = obj.value
           obj.destroy
           val

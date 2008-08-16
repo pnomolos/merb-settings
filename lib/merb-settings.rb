@@ -16,7 +16,6 @@ if defined?(Merb::Plugins)
   #Merb::Slices::config[:merb_settings][:foo] ||= :bar
 
   adapter_path = File.join( File.dirname(__FILE__), "merb-settings", "adapters")
-  #load File.join(adapter_path,  "common.rb")
 
   MS = MerbSettings
   MS.register_adapter :datamapper, "#{adapter_path}/datamapper"
@@ -65,6 +64,6 @@ if defined?(Merb::Plugins)
   end
   
   # Add dependencies for other MerbSettings classes below. Example:
-  # dependency "merb-settings/other"
+  dependency "merb-settings/scoped"
   
 end

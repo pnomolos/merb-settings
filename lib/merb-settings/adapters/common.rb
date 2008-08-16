@@ -44,13 +44,21 @@ module MerbSettings
 
         #retrieve all settings as a hash
         def all
-          vars = find(:all, :include => :setting_type, :select => 'var, value')
-
+          vars = get_all
           result = {}
-          vars.each do |record|
-            result[record.var] = YAML::load(record.value)
+          vars.each do |s|
+            result[s.name] = YAML::load(s.value)
           end
-          result.with_indifferent_access
+          result
+        end
+
+        def [](var)
+          getter(var)
+        end
+
+        #set a setting value by [] notation
+        def []=(var, val)
+          setter(var,val)
         end
 
       end

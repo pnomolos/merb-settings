@@ -69,4 +69,7 @@ end
 
 class User
   include MerbSettings::ScopedMethods
+
+  setting :foo, 'text'
+  setting :bar, 12
 end

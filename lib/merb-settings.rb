@@ -10,6 +10,8 @@ if defined?(Merb::Plugins)
   
   # Slice configuration - set this in a before_app_loads callback.
   Merb::Slices::config[:merb_settings][:foo] ||= :bar
+
+  MS = MerbSettings
   
   # All Slice code is expected to be namespaced inside a module
   module MerbSettings

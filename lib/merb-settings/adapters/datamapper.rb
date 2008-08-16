@@ -9,26 +9,30 @@ module MerbSettings
         base.send(:include, Common)
         #base.send(:include, InstanceMethods)
         base.send(:extend,  ClassMethods)
+
+        MS[:setting] = base
       end
 
       module ClassMethods
-        #retrieve a setting value bar [] notation
-        def [](var)
-          obj = find_by_var(var)
-          var.value
+
+        def get_all(type=nil,key=nil)
+          all(:scope_type.eql => type, :scope_id.eql => key)
         end
 
-        #set a setting value by [] notation
-        def []=(var, val)
-          obj = find_by_var(var) || Setting.new(:name => var)
-          obj.value = val
-          obj.save
+        def getter(var,type=nil,key=nil)
+          s = first(:name.eql => var, :scope_type.eql => type, :scope_id.eql => key)
+          # get a default if none found
+          # else return value or nil or exception??
+          YAML::load(s.value)
         end
 
-        private
-
-        def get_setting(var,type=nil,key=nil)
-
+        def setter(var,val,type=nil,key=nil)
+          s = getter(var,type,key)
+          if not s
+            s = MS[:setting].new(:name => var, :scope_type => type, :scope_id => key)
+          end
+          s.value = val.to_yaml
+          s.save
         end
       end # ClassMethods
 
@@ -40,7 +44,7 @@ module MerbSettings
             property :id, Serial
             property :name, String
             property :value, Yaml
-            property :scope_id, Integer
+            property :scope_id, String
             property :scope_type, String
             property :created_at, DateTime
             property :updated_at, DateTime

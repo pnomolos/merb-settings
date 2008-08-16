@@ -28,7 +28,7 @@ module MerbSettings
   class Main < Application
     
     def index
-      render
+      render "#{slice.description} (v. #{slice.version})"
     end
     
   end

@@ -5,25 +5,17 @@ if defined?(Merb::Plugins)
   load_dependency 'merb-slices'
   Merb::Plugins.add_rakefiles "merb-settings/merbtasks", "merb-settings/slicetasks"
 
-  adapter_path = File.join( File.dirname(__FILE__), "merb-settings", "adapters")
-  load File.join(adapter_path,  "common.rb")
-
-  Settings = MerbSettings
-  Settings.register_adapter :datamapper, "#{adapter_path}/datamapper"
-  #Settings.register_adapter :activerecord, "#{adapter_path}/activerecord"
-
   # Register the Slice for the current host application
   Merb::Slices::register(__FILE__)
   
   # Slice configuration - set this in a before_app_loads callback.
-  # By default a Slice uses its own layout.
-  Merb::Slices::config[:merb_settings][:layout] ||= :merb_settings
+  Merb::Slices::config[:merb_settings][:foo] ||= :bar
   
   # All Slice code is expected to be namespaced inside a module
   module MerbSettings
     
     # Slice metadata
-    self.description = "MerbSettings is a Merb slice that enables storing settings for your app"
+    self.description = "MerbSettings"
     self.version = "0.0.1"
     self.author = "Felix McCoey"
     
@@ -56,7 +48,7 @@ if defined?(Merb::Plugins)
     def self.setup_router(scope)
     end
     
-    # This sets up a thin slice's structure.
+    # This sets up a very thin slice's structure.
     def self.setup_default_structure!
       self.push_app_path(:root, Merb.root / 'slices' / self.identifier, nil)
       
@@ -65,10 +57,7 @@ if defined?(Merb::Plugins)
       
       self.push_path(:application, root, 'application.rb')
       self.push_app_path(:application, app_dir_for(:root), 'application.rb')
-      
-      self.push_path(:view, dir_for(:application) / "views")
-      self.push_app_path(:view, app_dir_for(:application) / "views")
-      
+            
       self.push_path(:public, root_path('public'), nil)
       self.push_app_path(:public, Merb.root / 'public' / 'slices' / self.identifier, nil)
       
@@ -91,7 +80,7 @@ if defined?(Merb::Plugins)
   #
   # Any component path that hasn't been set will default to MerbSettings.root
   #
-  # For a thin slice we just add application.rb, :view and :public locations.
+  # For a very thin slice we just add application.rb and :public locations.
   MerbSettings.setup_default_structure!
   
   # Add dependencies for other MerbSettings classes below. Example:

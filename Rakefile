@@ -4,11 +4,11 @@ require 'merb-core/version'
 require 'merb-core/tasks/merb_rake_helper'
 
 NAME = "merb-settings"
-AUTHOR = "Your Name"
-EMAIL = "Your Email"
-HOMEPAGE = "http://merbivore.com/"
-SUMMARY = "Merb Slice that provides ..."
-GEM_VERSION = "0.9.5"
+AUTHOR = "Felix McCoey"
+EMAIL = "felix.mccoey@gmail.com"
+HOMEPAGE = ""
+SUMMARY = "MerbSettings, settings for your Merb"
+GEM_VERSION = "0.0.1"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'merb'

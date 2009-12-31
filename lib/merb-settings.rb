@@ -6,7 +6,7 @@ if defined?(Merb::Plugins)
 
   load File.join(File.dirname(__FILE__), "merb-settings", "initializer.rb")
 
-  load_dependency 'merb-slices'
+  load_dependency 'merb-slices', nil
   Merb::Plugins.add_rakefiles "merb-settings/merbtasks", "merb-settings/slicetasks"
 
   # Register the Slice for the current host application
@@ -64,6 +64,6 @@ if defined?(Merb::Plugins)
   end
   
   # Add dependencies for other MerbSettings classes below. Example:
-  dependency "merb-settings/scoped"
+  require "merb-settings/scoped"
   
 end

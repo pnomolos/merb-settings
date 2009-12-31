@@ -20,7 +20,7 @@ module MerbSettings
 
         def self.included(base)
           base.class_eval do
-            property :id, Serial
+            property :id, Integer, :serial => true
             property :name, String
             property :value, String
             property :scope_id, String

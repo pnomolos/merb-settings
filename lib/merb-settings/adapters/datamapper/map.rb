@@ -36,11 +36,8 @@ module MerbSettings
           def setter(var,val, options = {})
             options[:type] ||= nil
             options[:key] ||= nil
-            s = first(:name.eql => var, :scope_type.eql => options[:type], :scope_id.eql => options[:key])
-            if s.nil?
-              s = new(:name => var, :scope_type => options[:type], :scope_id => options[:key])
-            end
-            s.update_attributes(:value => val.to_yaml)
+            s = first_or_create(:name => var, :scope_type => options[:type], :scope_id => options[:key])
+            s.update(:value => val.to_yaml)
           end
         end # ClassMethods
 

@@ -17,15 +17,15 @@ module MerbSettings
             options[:type] ||= nil
             options[:key] ||= nil
             if options[:name]
-              s = first(:name.eql => options[:name], 
-                        :scope_type.eql => options[:type], 
-                        :scope_id.eql => options[:key])
+              s = first(:name => options[:name], 
+                        :scope_type => options[:type], 
+                        :scope_id => options[:key])
               # get a default if none found
               # else return value or nil or exception??
               result = YAML::load(s.value.to_s)
             else
               result = {}
-              set = all(:scope_type.eql => options[:type], :scope_id.eql => options[:key])
+              set = all(:scope_type => options[:type], :scope_id => options[:key])
               set.each do |s|
                 result[s.name] = YAML::load(s.value.to_s)
               end
@@ -45,4 +45,3 @@ module MerbSettings
     end # DataMapper
   end # Adapter
 end
-

@@ -22,7 +22,7 @@ module MerbSettings
           base.class_eval do
             property :id, Integer, :serial => true
             property :name, String
-            property :value, String
+            property :value, String, :length => 255
             property :scope_id, String
             property :scope_type, String
             property :created_at, DateTime
